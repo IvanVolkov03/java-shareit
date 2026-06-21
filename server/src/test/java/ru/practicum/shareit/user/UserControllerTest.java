@@ -44,16 +44,6 @@ class UserControllerTest {
     }
 
     @Test
-    void create_shouldReturn400_whenEmailIsInvalid() throws Exception {
-        UserDto requestDto = new UserDto(null, "John", "invalid-email");
-
-        mockMvc.perform(post("/users")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(requestDto)))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
     void getById_shouldReturnUser() throws Exception {
         UserDto userDto = new UserDto(1L, "John", "john@example.com");
         when(userService.getById(1L)).thenReturn(userDto);

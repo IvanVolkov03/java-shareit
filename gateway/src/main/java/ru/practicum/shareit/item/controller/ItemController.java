@@ -17,6 +17,7 @@ import ru.practicum.shareit.item.dto.ItemDto;
 @Slf4j
 @Validated
 public class ItemController {
+
     private final ItemClient itemClient;
 
     @PostMapping
@@ -28,7 +29,7 @@ public class ItemController {
 
     @PatchMapping("/{itemId}")
     public ResponseEntity<Object> updateItem(@RequestHeader("X-Sharer-User-Id") @Positive Long userId,
-                                             @PathVariable Long itemId,
+                                             @PathVariable @Positive Long itemId,
                                              @RequestBody @Valid ItemDto itemDto) {
         log.info("Updating item: {}", itemDto);
         return itemClient.update(userId, itemId, itemDto);
@@ -36,7 +37,7 @@ public class ItemController {
 
     @GetMapping("/{itemId}")
     public ResponseEntity<Object> getItem(@RequestHeader("X-Sharer-User-Id") @Positive Long userId,
-                                          @PathVariable Long itemId) {
+                                          @PathVariable @Positive Long itemId) {
         log.info("Getting item: {}", itemId);
         return itemClient.getItem(userId, itemId);
     }
@@ -57,7 +58,7 @@ public class ItemController {
 
     @PostMapping("/{itemId}/comment")
     public ResponseEntity<Object> addComment(@RequestHeader("X-Sharer-User-Id") @Positive Long userId,
-                                             @PathVariable Long itemId,
+                                             @PathVariable @Positive Long itemId,
                                              @RequestBody @Valid CommentDto commentDto) {
         log.info("Adding comment to item: {}", itemId);
         return itemClient.addComment(userId, itemId, commentDto);
