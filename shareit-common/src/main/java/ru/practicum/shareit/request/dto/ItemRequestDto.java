@@ -1,5 +1,6 @@
 package ru.practicum.shareit.request.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 public class ItemRequestDto {
     private Long id;
+
+    @NotBlank(message = "Description cannot be empty")
     private String description;
+
     private LocalDateTime created;
     private List<ItemShortDto> items;
     private RequestorDto requestor;

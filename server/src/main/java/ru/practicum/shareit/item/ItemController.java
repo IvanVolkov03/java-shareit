@@ -1,28 +1,23 @@
 package ru.practicum.shareit.item;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/items")
 @RequiredArgsConstructor
-@Validated
 public class ItemController {
     private final ItemService itemService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ItemDto create(
-            @RequestHeader("X-Sharer-User-Id") @Positive Long userId,
-            @RequestBody @Valid ItemDto itemDto
+            @RequestHeader("X-Sharer-User-Id") Long userId,
+            @RequestBody ItemDto itemDto
     ) {
         return itemService.create(itemDto, userId);
     }
@@ -30,8 +25,8 @@ public class ItemController {
     @PatchMapping("/{itemId}")
     public ItemDto update(
             @PathVariable Long itemId,
-            @RequestHeader("X-Sharer-User-Id") @Positive Long userId,
-            @RequestBody @Valid ItemDto itemDto
+            @RequestHeader("X-Sharer-User-Id") Long userId,
+            @RequestBody ItemDto itemDto
     ) {
         return itemService.update(itemId, userId, itemDto);
     }
@@ -45,7 +40,7 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDto> getByOwner(@RequestHeader("X-Sharer-User-Id") @Positive Long userId) {
+    public List<ItemDto> getByOwner(@RequestHeader("X-Sharer-User-Id") Long userId) {
         return itemService.getByOwnerId(userId);
     }
 
@@ -58,8 +53,8 @@ public class ItemController {
     @ResponseStatus(HttpStatus.CREATED)
     public CommentDto addComment(
             @PathVariable Long itemId,
-            @RequestHeader("X-Sharer-User-Id") @Positive Long userId,
-            @RequestBody @Valid CommentDto commentDto
+            @RequestHeader("X-Sharer-User-Id") Long userId,
+            @RequestBody CommentDto commentDto
     ) {
         return itemService.addComment(itemId, userId, commentDto.getText());
     }
